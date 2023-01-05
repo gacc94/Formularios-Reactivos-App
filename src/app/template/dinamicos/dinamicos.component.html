@@ -1,0 +1,95 @@
+<h2>Template: <small>Dinamicos</small></h2>
+<hr>
+
+<form autocomplete="off" (ngSubmit)="guardar( )" #myForm="ngForm">
+
+    <div class="mb-3 row">
+        <label class="col-form-label col-sm-3">Nombre</label>
+        <div class="col-sm-9">
+            <input
+                type="text"
+                class="form-control"
+                name="nombre"
+                [ngModel]="person.nombre"
+                required
+                placeholder="Nombre de la persona">
+            <span
+                *ngIf="myForm.controls['name']?.touched && myForm.controls['name']?.invalid"
+                class="text-danger form-text">
+                Este campo es obligatorio
+            </span>
+        </div>
+
+    </div>
+
+    <div class="mb-4 row">
+        <label class="col-form-label col-sm-3">Agregar</label>
+        <div class="col-sm-9">
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="nuevoJuego"
+                    name="nuevoJuego"
+                    placeholder="Agregar juego favorito">
+
+                <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    (click)="addNewGame()">
+                    Agregar
+                </button>
+
+            </div>
+            <!-- <span
+                *ngIf="myForm.controls['name']?.touched && myForm.controls['name']?.invalid"
+                class="text-danger form-text">
+                Este campo es obligatorio
+            </span> -->
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label class="col-form-label col-sm-3">Favoritos</label>
+        <div class="col-sm-9">
+            <div
+                *ngFor="let item of person.favoritos; let i = index "
+                class="input-group  mb-2">
+                <input
+                    type="text"
+                    class="form-control"
+                    required=""
+                    [(ngModel)]=" item.nombre"
+                    [name]="'game_'+i">
+                <button
+                    type="button"
+                    class="btn btn-outline-warning"
+                    (click)="deleteFavorites( i )">
+                    Borrar
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-9 text-center">
+            <button [disabled]="!myForm.valid"
+                type="submit"
+                class="btn btn-primary w-50">
+                Guardar
+            </button>
+        </div>
+    </div>
+
+</form>
+
+
+<span>Persona</span>
+
+<pre>
+
+    {{ person | json}}
+</pre>

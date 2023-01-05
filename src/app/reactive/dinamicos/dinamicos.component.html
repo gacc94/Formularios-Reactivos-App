@@ -1,0 +1,97 @@
+<h2>Template: <small>Dinamicos</small></h2>
+<hr>
+
+<form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+    <div class="mb-3 row">
+        <label class="col-form-label col-sm-3">Nombre</label>
+        <div class="col-sm-9">
+            <input
+                type="text"
+                class="form-control"
+                formControlName="nombre"
+                placeholder="Nombre de la persona">
+            <span
+                *ngIf="isInvalid('nombre')"
+                class="text-danger form-text">
+                Este campo es obligatorio
+            </span>
+        </div>
+
+    </div>
+
+    <div class="mb-4 row">
+        <label class="col-form-label col-sm-3">Agregar</label>
+        <div class="col-sm-9">
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Agregar juego favorito"
+                    [formControl]="newFavorite"
+                    >
+
+                <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    (click)="addFavorite()">
+                    Agregar
+                </button>
+
+            </div>
+            <span
+                *ngIf="isInvalid('nuevoJuego')"
+                class="text-danger form-text">
+                Este campo es obligatorio
+            </span>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label class="col-form-label col-sm-3">Favoritos</label>
+        <div class="col-sm-9" formArrayName="favorites">
+            <div *ngFor="let item of favoritesArr?.value; let i = index"
+                class="input-group  mb-2">
+                <input
+                    type="text"
+                    class="form-control"
+                    [value]="item"
+                    [formControlName]="i"
+                    required>
+                <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    (click)="removeFavorite(i)">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-9 text-center">
+            <button
+                type="submit"
+                class="btn btn-primary w-50">
+                Guardar
+            </button>
+        </div>
+    </div>
+
+</form>
+
+
+<h3>Persona</h3>
+
+<span>Valid</span>
+<pre>{{ myForm.valid | json }}</pre>
+
+<span>Value</span>
+<pre>{{ myForm.value | json }}</pre>
+
+<span>Nuevo Favorito</span>
+<pre>{{ newFavorite.value | json }}</pre>
+
